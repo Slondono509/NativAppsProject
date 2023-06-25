@@ -20,6 +20,8 @@ class estudianteResource extends JsonResource
             'apellido' => $this->apellido,
             'edad' => $this->edad,
             'email' => $this->email,           
+            'created_at' => $this->created_at,           
+            'updated_at' => $this->updated_at,           
         ];
     }
 }

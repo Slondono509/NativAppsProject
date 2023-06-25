@@ -20,6 +20,8 @@ class cursoResource extends JsonResource
             'horario' => $this->horario,
             'fecha_inicio' => $this->fecha_inicio,
             'fecha_fin' => $this->fecha_fin,            
+            'created_at' => $this->created_at,           
+            'updated_at' => $this->updated_at,        
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Http\Requests\StoreEstudianteRequest;
 use App\Http\Requests\UpdateEstudianteRequest;
 use App\Http\Resources\estudianteResource;
@@ -15,7 +16,9 @@ class EstudianteController extends Controller
     public function index()
     {
         $data = estudiante::latest()->get();
-        return response()->success(estudianteResource::collection($data));
+        return Inertia::render('Estudiante/index', [
+            'estudiantes' => estudianteResource::collection($data),         
+        ]);
     }
 
     /**
