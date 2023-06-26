@@ -1,6 +1,8 @@
 import './bootstrap';
+import '../sass/app.scss'
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
+
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
@@ -12,7 +14,7 @@ createInertiaApp({
   },
   setup({ el, App, props, plugin }) {
     createApp({ render: () => h(App, props) })
-      .use(plugin)
+      .use(plugin)      
       .mount(el)
   },
 })
