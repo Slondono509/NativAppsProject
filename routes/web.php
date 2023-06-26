@@ -21,5 +21,6 @@ Route::get('/', function () {
 
 
 Route::resource('estudiante', EstudianteController::class)->name('index','estudiante');
+Route::get('estudiante-reload',  [EstudianteController::class, 'reloadEstudiantes']);
 Route::resource('curso', CursoController::class)->name('index','curso');
 Route::resource('estudiante-curso', EstudianteCursoController::class);

@@ -14,6 +14,9 @@ class estudianteCursosResource extends JsonResource
      */
     public function toArray($request)
     {
-        return $this->curso;       
+        return [
+            'id' => $this->id,
+             $this->curso
+        ];       
     }
 }

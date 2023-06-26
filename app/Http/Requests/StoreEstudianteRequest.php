@@ -23,10 +23,10 @@ class StoreEstudianteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre' => 'required',           
-            'apellido' => 'required',           
-            'edad' => 'required',           
-            'email' => 'required', 
+            'nombre' => 'required|string',           
+            'apellido' => 'required|string',           
+            'edad' => 'required|int',           
+            'email' => 'required|string|email|max:100|unique:estudiantes', 
         ];
     }
 

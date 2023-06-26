@@ -14,11 +14,11 @@ class EstudianteCursoController extends Controller
      */
     public function store(StoreEstudianteCursoRequest $request)
     {
-        estudiante_curso::create([
+        $estudiante_curso = estudiante_curso::create([
             'estudiante_id' => $request->estudiante_id,
             'curso_id' => $request->curso_id,           
         ]);
-        return response()->success(['Estudiante asignado al curso!']);
+        return response()->success(['Estudiante asignado al curso!', $estudiante_curso->id]);
     }
 
     /**
