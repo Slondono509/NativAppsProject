@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use Inertia\Inertia;
 use App\Http\Requests\StoreCursoRequest;
 use App\Http\Requests\UpdateCursoRequest;
@@ -23,13 +25,27 @@ class CursoController extends Controller
         return Inertia::render('Curso/index', [
             'cursos' => cursoResource::collection($curso),
             'estudiantes' => estudianteResource::collection($estudiante),
-        ]);        
+        ]);
     }
 
     public function reloadCursos()
     {
         $curso = curso::latest()->get();
         return response()->success(cursoResource::collection($curso));
+    }
+
+    public function topCursos()
+    {
+        $seisMesesAtras = Carbon::now()->subMonths(6);
+        $cursosConMasEstudiantes = DB::table('cursos')
+            ->join('estudiante_cursos', 'cursos.id', '=', 'estudiante_cursos.curso_id')
+            ->select('cursos.nombre', DB::raw('COUNT(estudiante_cursos.estudiante_id) as total_estudiantes'))
+            ->where('estudiante_cursos.created_at', '>=', $seisMesesAtras)
+            ->groupBy('cursos.id')
+            ->orderByDesc('total_estudiantes')
+            ->limit(3)
+            ->get();
+        return response()->success($cursosConMasEstudiantes);
     }
 
     /**

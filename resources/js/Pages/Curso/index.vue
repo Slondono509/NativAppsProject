@@ -6,7 +6,10 @@
                     <div class="card-header">
                         <div class="order-card-header">
                             <h3>Cursos</h3>
-                            <button type="button" class="btn btn-primary" @click="registarCurso()">Registrar</button>
+                            <div>
+                                <button type="button" class="btn btn-success spaceRight" @click="topCurso()">Top cursos</button>
+                                <button type="button" class="btn btn-primary" @click="registarCurso()">Registrar</button>
+                            </div>
                         </div>
                     </div>
                     <div class="card-body">
@@ -50,17 +53,20 @@
         </div>
         <modal v-if="renderComponent" v-bind="dataEdit" :estudiantes="estudiantes" :regitrarModal="regitrarModal"
             @editarNuevoCurso="(i) => editarCurso(i)" @reloadCurso="reloadCurso()" />
+        <modal-cursos v-if="renderComponent" :topCurdoData="topCurdoData"/>   
     </div>
 </template>  
 <script setup>
 import { ref, nextTick } from 'vue';
 import axios from 'axios';
 import Modal from './components/Modal.vue';
+import ModalCursos from './components/ModalCursos.vue';
 
 const { cursos, estudiantes  } = defineProps(['cursos','estudiantes']);
 const renderComponent = ref(true);
 const dataEdit = ref({ estudiante_curso: [] });
 const regitrarModal = ref(true);
+const topCurdoData = ref([]);
 
 const forceRerender = async () => {
     renderComponent.value = false;
@@ -79,6 +85,22 @@ const reloadCurso = async () => {
         throw error;
     }
 }
+
+const topCurso = async () => {
+    try {
+        const service = await axios.get(`/top-curso`);
+        if (service.status === 200) {                   
+            topCurdoData.value = service.data.data;            
+            await forceRerender();
+            const myModal = new bootstrap.Modal(document.getElementById('modalTopCurso'));
+            myModal.show();
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+
 
 const eliminarCurso = async (id) => {
     try {
@@ -111,8 +133,14 @@ const registarCurso = async () => {
     myModal.show();
 }
 
+
+
 </script>
 <style scoped>
+.spaceRight{
+    margin-right: 10px;
+}
+
 .order-card-header {
     display: flex;
     justify-content: space-between;
