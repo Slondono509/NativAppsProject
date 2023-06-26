@@ -15,12 +15,11 @@ use App\Http\Controllers\EstudianteCursoController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
 Route::resource('estudiante', EstudianteController::class)->name('index','estudiante');
 Route::get('estudiante-reload',  [EstudianteController::class, 'reloadEstudiantes']);
+Route::get('/',  [EstudianteController::class, 'index']);
+
 Route::resource('curso', CursoController::class)->name('index','curso');
+Route::get('curso-reload',  [CursoController::class, 'reloadCursos']);
+
 Route::resource('estudiante-curso', EstudianteCursoController::class);

@@ -23,10 +23,10 @@ class UpdateCursoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre' => 'required',           
-            'horario' => 'required',           
-            'fecha_inicio' => 'required',           
-            'fecha_fin' => 'required',
+            'nombre' => 'required|string',           
+            'horario' => 'required|string',           
+            'fecha_inicio' => 'required|date',           
+            'fecha_fin' => 'required|date',   
         ];
     }
 

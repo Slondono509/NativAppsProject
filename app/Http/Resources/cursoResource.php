@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\cursoEstudiantesResource;
 
 class cursoResource extends JsonResource
 {
@@ -22,6 +23,7 @@ class cursoResource extends JsonResource
             'fecha_fin' => $this->fecha_fin,            
             'created_at' => $this->created_at,           
             'updated_at' => $this->updated_at,        
+            'estudiante_curso' => cursoEstudiantesResource::collection($this->estudiante_curso),
         ];
     }
 }

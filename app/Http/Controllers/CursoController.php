@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Http\Requests\StoreCursoRequest;
 use App\Http\Requests\UpdateCursoRequest;
 use App\Http\Resources\cursoResource;
+use App\Http\Resources\estudianteResource;
 use App\Models\curso;
+use App\Models\estudiante;
+use App\Models\estudiante_curso;
 
 class CursoController extends Controller
 {
@@ -14,16 +18,18 @@ class CursoController extends Controller
      */
     public function index()
     {
-        $data = curso::latest()->get();
-        return response()->success(cursoResource::collection($data));
+        $curso = curso::latest()->get();
+        $estudiante = estudiante::latest()->get();
+        return Inertia::render('Curso/index', [
+            'cursos' => cursoResource::collection($curso),
+            'estudiantes' => estudianteResource::collection($estudiante),
+        ]);        
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function reloadCursos()
     {
-        //
+        $curso = curso::latest()->get();
+        return response()->success(cursoResource::collection($curso));
     }
 
     /**
@@ -38,22 +44,6 @@ class CursoController extends Controller
             'fecha_fin' => $request->fecha_fin,
         ]);
         return response()->success(['Curso creado correctamente!', new cursoResource($curso)]);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Curso $curso)
-    {
-        return response()->success([new cursoResource($curso)]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Curso $curso)
-    {
-        return response()->success([new cursoResource($curso)]);
     }
 
     /**
@@ -74,6 +64,8 @@ class CursoController extends Controller
      */
     public function destroy(Curso $curso)
     {
+        $estudiante_curso = estudiante_curso::where('curso_id', $curso->id);
+        $estudiante_curso->delete();
         $curso->delete();
         return response()->success('Curso eliminado correctamente!');
     }

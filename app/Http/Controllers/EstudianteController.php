@@ -21,12 +21,13 @@ class EstudianteController extends Controller
         $estudiante = estudiante::latest()->get();
         $curso = curso::latest()->get();
         return Inertia::render('Estudiante/index', [
-            'estudiantes' => estudianteResource::collection($estudiante),         
-            'cursos' => cursoResource::collection($curso),         
+            'estudiantes' => estudianteResource::collection($estudiante),
+            'cursos' => cursoResource::collection($curso),
         ]);
     }
 
-    public function reloadEstudiantes(){
+    public function reloadEstudiantes()
+    {
         $estudiante = estudiante::latest()->get();
         return response()->success(estudianteResource::collection($estudiante));
     }
@@ -52,7 +53,7 @@ class EstudianteController extends Controller
     {
         $estudiante->nombre = $request->nombre;
         $estudiante->apellido = $request->apellido;
-        $estudiante->edad = $request->edad;        
+        $estudiante->edad = $request->edad;
         $estudiante->save();
         return response()->success(['Estudiante actualizado correctamente!', new estudianteResource($estudiante)]);
     }
@@ -62,7 +63,7 @@ class EstudianteController extends Controller
      */
     public function destroy(Estudiante $estudiante)
     {
-        $estudiante_curso = estudiante_curso::where('estudiante_id',$estudiante->id);
+        $estudiante_curso = estudiante_curso::where('estudiante_id', $estudiante->id);
         $estudiante_curso->delete();
         $estudiante->delete();
         return response()->success('Estudiante eliminado correctamente!');
