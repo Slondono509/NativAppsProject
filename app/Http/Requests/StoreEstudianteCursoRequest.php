@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StoreEstudianteRequest extends FormRequest
+class StoreEstudianteCursoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +23,8 @@ class StoreEstudianteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre' => 'required',           
-            'apellido' => 'required',           
-            'edad' => 'required',           
-            'email' => 'required', 
+            'estudiante_id' => 'required',           
+            'curso_id' => 'required',                          
         ];
     }
 

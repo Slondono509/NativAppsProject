@@ -6,7 +6,9 @@ use Inertia\Inertia;
 use App\Http\Requests\StoreEstudianteRequest;
 use App\Http\Requests\UpdateEstudianteRequest;
 use App\Http\Resources\estudianteResource;
+use App\Http\Resources\cursoResource;
 use App\Models\estudiante;
+use App\Models\curso;
 
 class EstudianteController extends Controller
 {
@@ -15,9 +17,11 @@ class EstudianteController extends Controller
      */
     public function index()
     {
-        $data = estudiante::latest()->get();
+        $estudiante = estudiante::latest()->get();
+        $curso = curso::latest()->get();
         return Inertia::render('Estudiante/index', [
-            'estudiantes' => estudianteResource::collection($data),         
+            'estudiantes' => estudianteResource::collection($estudiante),         
+            'cursos' => cursoResource::collection($curso),         
         ]);
     }
 

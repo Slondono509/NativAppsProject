@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\CursoController;
+use App\Http\Controllers\EstudianteCursoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,5 +20,6 @@ Route::get('/', function () {
 });
 
 
-Route::resource('estudiante', EstudianteController::class);
-Route::resource('curso', CursoController::class);
+Route::resource('estudiante', EstudianteController::class)->name('index','estudiante');
+Route::resource('curso', CursoController::class)->name('index','curso');
+Route::resource('estudiante-curso', EstudianteCursoController::class);
